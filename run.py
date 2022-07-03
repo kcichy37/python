@@ -1,3 +1,6 @@
+"""
+Import of the spreadsheets
+"""
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -11,6 +14,7 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
+
 
 def get_sales_data():
     """
@@ -32,19 +36,15 @@ def validate_data(values):
     Raises ValueError if strings cannot be converted into int,
     or if there aren't exactly 6 figures.
     """
+
     try:
+        [int(value) for value in values]
         if len(values) != 6:
             raise ValueError(
                 f"Expected 6 values required, you provided {len(values)}"
             )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
-
-
-
-
-
-
+    except ValueError as error:
+        print(f"Invalid data: {error}, please try again.\n")
 
 
 get_sales_data()
